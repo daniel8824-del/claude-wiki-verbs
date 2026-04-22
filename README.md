@@ -26,7 +26,11 @@ Works with **Claude Code · Antigravity · Codex · Gemini CLI · Cursor** via s
 
 ---
 
-## Quick Install (3 steps)
+## Install
+
+Two paths — pick the one that fits.
+
+### Path A — Full setup (recommended)
 
 ```bash
 git clone https://github.com/daniel8824-del/claude-wiki-verbs ~/repos/claude-wiki-verbs
@@ -34,7 +38,7 @@ cd ~/repos/claude-wiki-verbs
 ./install.sh
 ```
 
-The installer:
+Handles everything:
 1. Detects installed tools (Claude Code / Antigravity / Codex / Gemini CLI) and symlinks `skills/wiki/` into each
 2. Prompts for Obsidian vault path, substitutes `${VAULT_ROOT}` placeholder in all skill files
 3. Offers to copy `VAULT_TEMPLATE/` (6-area scaffold) if the vault dir doesn't exist
@@ -43,7 +47,22 @@ The installer:
 
 Flags: `--vault /path` (skip prompt) · `--force` (overwrite existing real skill dirs without backup) · `--uninstall`
 
-**One source of truth.** Edit `skills/wiki/**` → all symlinked tools see the change instantly (no sync step). Existing real `~/.claude/skills/wiki` directories are auto-backed up to `.backup-{timestamp}` before being replaced.
+### Path B — Claude Code plugin marketplace (skill files only)
+
+```
+/plugin marketplace add daniel8824-del/claude-wiki-verbs
+/plugin install claude-wiki-verbs@claude-wiki-verbs-marketplace
+```
+
+⚠️ **This path only registers the skill into Claude Code.** It does NOT:
+- Substitute `${VAULT_ROOT}` — you must `export VAULT_ROOT=/path/to/your/vault` or sed-replace manually
+- Install qmd or run initial indexing
+- Copy `VAULT_TEMPLATE/` scaffold
+- Symlink into Antigravity / Codex / Gemini CLI
+
+Use Path B only if you're Claude Code-only and comfortable doing the vault + qmd setup yourself.
+
+**One source of truth.** With Path A, editing `skills/wiki/**` propagates to all symlinked tools instantly (no sync step). Existing real `~/.claude/skills/wiki` directories are auto-backed up to `.backup-{timestamp}` before being replaced.
 
 ---
 
