@@ -1,0 +1,19 @@
+{
+  "$schema": "https://claude.ai/schemas/marketplace.json",
+  "name": "claude-wiki-verbs",
+  "description": "9-verb knowledge engine for Obsidian vaults — Karpathy LLM Wiki pattern, pure markdown prompts",
+  "version": "0.1.0",
+  "author": {
+    "name": "Daniel",
+    "url": "https://github.com/daniel8824-del"
+  },
+  "license": "MIT",
+  "plugins": {
+    "claude-wiki-verbs": {
+      "source": {
+        "source": "github",
+        "repo": "daniel8824-del/claude-wiki-verbs"
+      }
+    }
+  }
+}
