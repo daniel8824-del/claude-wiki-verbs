@@ -40,10 +40,12 @@ cd ~/repos/claude-wiki-verbs
 
 Handles everything:
 1. Detects installed tools (Claude Code / Antigravity / Codex / Gemini CLI) and symlinks `skills/wiki/` into each
-2. Prompts for Obsidian vault path, substitutes `${VAULT_ROOT}` placeholder in all skill files
+2. Prompts for Obsidian vault path, exports `VAULT_ROOT` to your shell rc (`~/.bashrc` / `~/.zshrc`) — the canonical skill files stay clean; Bash expands `${VAULT_ROOT}` at runtime
 3. Offers to copy `VAULT_TEMPLATE/` (6-area scaffold) if the vault dir doesn't exist
 4. Offers to install [qmd](https://www.npmjs.com/package/qmd) (`npm i -g qmd`); if available, registers the vault collection and runs initial indexing
 5. Cursor users: prints a hint to copy `skills/wiki/SKILL.md` into `.cursor/rules/wiki.mdc` (Cursor needs `.mdc` format, can't use a symlink)
+
+After install, run `source ~/.bashrc` (or open a new terminal) to pick up `VAULT_ROOT`.
 
 Flags: `--vault /path` (skip prompt) · `--force` (overwrite existing real skill dirs without backup) · `--uninstall`
 
