@@ -130,9 +130,24 @@ if [[ ! -d "$VAULT" ]]; then
   fi
 fi
 
-# Substitute ${VAULT_ROOT} placeholder in all skill files
-green "  Substituting \${VAULT_ROOT} → $VAULT"
-find "$CANONICAL" -type f -name "*.md" -exec sed -i "s|\${VAULT_ROOT}|$VAULT|g" {} +
+# Export VAULT_ROOT to user's shell rc (idempotent — won't duplicate)
+# This keeps canonical skill files clean (no sed-in-place); bash expands
+# ${VAULT_ROOT} at runtime in commands like `find ${VAULT_ROOT} -iname ...`.
+RC_LINE="export VAULT_ROOT=\"$VAULT\"  # claude-wiki-verbs"
+for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
+  if [[ -f "$rc" ]]; then
+    if grep -qF "claude-wiki-verbs" "$rc"; then
+      # Update existing line in place
+      sed -i "s|^export VAULT_ROOT=.*claude-wiki-verbs|$RC_LINE|" "$rc"
+      green "  ✓ updated VAULT_ROOT in $rc"
+    else
+      printf '\n# claude-wiki-verbs\n%s\n' "$RC_LINE" >> "$rc"
+      green "  ✓ exported VAULT_ROOT to $rc"
+    fi
+  fi
+done
+green "  Note: re-source your shell (\"source ~/.bashrc\") or open a new terminal to pick up VAULT_ROOT"
+export VAULT_ROOT="$VAULT"  # available for the qmd step below in this session
 
 # ─── QMD (optional) ────────────────────────────────────────────────────────
 echo
